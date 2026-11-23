@@ -1,5 +1,6 @@
 import React from 'react';
 import {AbsoluteFill, Audio, Composition, Sequence, staticFile} from 'remotion';
+import {Caption} from './lib';
 import {S1, S2, S3, S4, S5, S6, S7, S8, S9, S10} from './scenes';
 
 // Roteiro (24 fps): duração de cada corte em frames
@@ -34,9 +35,21 @@ const Alinhavo: React.FC<{withAudio: boolean}> = ({withAudio}) => {
 	);
 };
 
+// Capa (thumbnail) para TikTok / Shorts: rosto costurado + gancho
+const Capa: React.FC = () => (
+	<AbsoluteFill style={{backgroundColor: '#000'}}>
+		<Sequence from={-150}>
+			<S8 />
+		</Sequence>
+		<Caption text="ele conserta tudo que quebra…" start={0} f={999} y={210} size={74} />
+		<Caption text="…até você." start={0} f={999} y={1330} size={88} />
+	</AbsoluteFill>
+);
+
 export const RemotionRoot: React.FC = () => (
 	<>
 		<Composition id="Alinhavo" component={Alinhavo} durationInFrames={1440} fps={24} width={1080} height={1920} defaultProps={{withAudio: true}} />
+		<Composition id="Capa" component={Capa} durationInFrames={1} fps={24} width={1080} height={1920} />
 		<Composition id="AlinhavoMudo" component={Alinhavo} durationInFrames={1440} fps={24} width={1080} height={1920} defaultProps={{withAudio: false}} />
 	</>
 );

@@ -6,6 +6,8 @@ doméstico (luz de vela vs. frio, paleta dessaturada com um único acento carmim
 
 - `alinhavo_final_9x16.mp4` — vídeo final (1080×1920, 24 fps com animação em "dois", H.264 + AAC, −14 LUFS)
 - `alinhavo_quadros.png` — folha de contato (1 quadro a cada 2 s)
+- `alinhavo_capa.png` — capa 1080×1920 (`npx remotion still src/index.ts Capa out/capa.png`)
+- `POSTAGEM.md` — legendas, títulos e hashtags para TikTok e Shorts + checklist de publicação
 - `producao.md` — guia de produção, custos e status das etapas
 - `video/` — projeto Remotion que gera o vídeo inteiro por código
 

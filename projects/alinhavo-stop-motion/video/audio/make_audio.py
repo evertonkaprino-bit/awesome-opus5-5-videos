@@ -119,7 +119,7 @@ def grind(dur):
 
 def crack_snap():
     t = t_(0.9)
-    s = hp_fast(rng.standard_normal(len(t)), 1200) * np.exp(-t * 35)
+    s = hp_fast(rng.standard_normal(len(t)), 900) * np.exp(-t * 12)
     for k in range(9):
         at = 0.02 + rng.random() * 0.5
         i = int(at * SR)
@@ -203,7 +203,7 @@ for k in range(13):
 melody = [
     (0.0, 'A5'), (0.5, 'C6'), (1.0, 'E6'), (1.5, 'D6'), (2.25, 'C6'), (2.75, 'B5'), (3.25, 'A5'),
     (4.25, 'E5'), (4.75, 'A5'), (5.25, 'B5'), (5.75, 'C6'), (6.5, 'B5'), (7.0, 'G#5'), (7.75, 'A5'),
-    (8.75, 'A5'), (9.25, 'C6'), (9.75, 'E6'), (10.25, 'F6'), (11.0, 'E6'), (11.5, 'D6'), (12.25, 'C6'), (13.0, 'B5'),
+    (8.75, 'A5'), (9.25, 'C6'), (9.75, 'E6'), (10.25, 'F6'), (11.0, 'E6'), (11.5, 'D6'), (12.25, 'C6'),
 ]
 NOTE = {'E5': 659.25, 'G#5': 830.61, 'A5': 880.0, 'B5': 987.77, 'C6': 1046.5, 'D6': 1174.66, 'E6': 1318.51, 'F6': 1396.91}
 for off, n in melody:
@@ -214,18 +214,18 @@ add(snip(), 12.5, pan=-0.3)
 add(grind(1.8), 13.75, gain=0.5, pan=-0.4)
 
 # CENA 4 (16–23 s): estalo da rachadura — a melodia some
-add(crack_snap(), 17.17)
+add(crack_snap(), 17.17, gain=3.0)
 
 # CENA 5 (23–31 s): passos de feltro e portas
 step_times = [23.0 + i * 0.42 for i in range(5)] + [25.5 + i * 0.42 for i in range(5)] + [28.0 + i * 0.42 for i in range(7)]
 for st in step_times:
-    add(felt_step(), st, gain=0.8, pan=0.0)
+    add(felt_step(), st, gain=0.45, pan=0.0)
 for dc, pn in ((24.9, -0.6), (27.4, 0.6), (29.9, -0.5)):
-    add(door_creak(1.0), dc, pan=pn)
+    add(door_creak(1.0), dc, gain=0.7, pan=pn)
 
 # grave crescendo 16–31 s e corte seco em 31 s
 dr = drone(16.0, 31.0, base=46.25, level=1.0)
-dr *= np.linspace(0.02, 0.28, len(dr)) * env(len(dr), 0.5, 0.05)
+dr *= np.linspace(0.02, 0.13, len(dr)) * env(len(dr), 0.5, 0.05)
 add(dr, 16.0)
 
 # CENA 6 (31–39 s): silêncio, respiração, clique duplo
@@ -256,10 +256,10 @@ for i, (off, n) in enumerate(detuned):
 
 # CENA 9 (52–58 s): agulha se aproximando, sussurro "Sua vez."
 rise = drone(52.0, 57.9, base=58.0, level=1.0)
-rise *= np.linspace(0.0, 0.22, len(rise)) * env(len(rise), 0.3, 0.04)
+rise *= np.linspace(0.0, 0.10, len(rise)) * env(len(rise), 0.3, 0.04)
 add(rise, 52.0)
 for k in range(6):
-    add(needle_stab() * 0.25, 52.4 + k * 0.6, pan=0.0)
+    add(needle_stab() * 0.12, 52.4 + k * 0.6, pan=0.0)
 
 whisper_path = os.path.join(os.path.dirname(__file__), 'sua_vez.wav')
 if not os.path.exists(whisper_path):
@@ -279,8 +279,8 @@ wh = 0.6 * air + 0.4 * data
 echo = np.zeros(len(wh) + int(0.18 * SR))
 echo[: len(wh)] += wh
 echo[int(0.18 * SR) :] += wh * 0.35
-add(echo, 55.7, gain=0.9, pan=-0.05)
-add(echo * 0.5, 55.72, gain=0.6, pan=0.4)
+add(echo, 55.7, gain=1.6, pan=-0.05)
+add(echo * 0.5, 55.72, gain=0.9, pan=0.4)
 
 # CENA 10 (58–60 s): silêncio e clique que emenda no início
 add(glass_click(0.8), 59.82)
